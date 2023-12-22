@@ -47,8 +47,8 @@ import org.jhotdraw.util.*;
 public class StrokeToolBar extends AbstractToolBar {
 
     private static final long serialVersionUID = 1L;
-    private SelectionComponentDisplayer displayer;
-    private ResourceBundleUtil labels;
+    private  SelectionComponentDisplayer displayer;
+    private final ResourceBundleUtil labels;
 
     /**
      * Creates new instance.
@@ -109,8 +109,8 @@ public class StrokeToolBar extends AbstractToolBar {
         textField.setUI((PaletteFormattedTextFieldUI) PaletteFormattedTextFieldUI.createUI(textField));
     }
 
-    private JPopupButton StrokeColor() {
-        Map<AttributeKey<?>, Object> defaultAttributes = new HashMap<AttributeKey<?>, Object>();
+    private JPopupButton createStrokeColor() {
+        Map<AttributeKey<?>, Object> defaultAttributes = new HashMap<>();
         STROKE_GRADIENT.put(defaultAttributes, null);
         JPopupButton btn = ButtonFactory.createSelectionColorChooserButton(editor,
                 STROKE_COLOR, "attribute.strokeColor", labels,
@@ -120,13 +120,13 @@ public class StrokeToolBar extends AbstractToolBar {
         return btn;
     }
 
-    private JPopupButton OpacitySlider() {
+    private JPopupButton createOpacitySlider() {
         JPopupButton opacityPopupButtonWithSlider = new JPopupButton();
         disposables.add(new SelectionComponentRepainter(editor, opacityPopupButtonWithSlider));
         return createButtonWithSlider(JPopupButton.VERTICAL, 0, 100, 100, "attribute.strokeOpacity", STROKE_OPACITY, 100d);
     }
 
-    private JPopupButton CreateStrokeWithPopupSlider() {
+    private JPopupButton createStrokeWidthPopupSlider() {
         return createButtonWithSlider(JSlider.VERTICAL, 0, 100, 10, "attribute.strokeWidth", STROKE_WIDTH, 1d);
     }
 
@@ -163,33 +163,33 @@ public class StrokeToolBar extends AbstractToolBar {
     }
 
 
-    private JAttributeTextField<Color> StrokeColorField() {
-        HashMap<AttributeKey<?>, Object> defaultAttributes = new HashMap<AttributeKey<?>, Object>();
-        JAttributeTextField<Color> colorField = new JAttributeTextField<Color>();
+    private JAttributeTextField<Color> strokeColorField() {
+        HashMap<AttributeKey<?>, Object> defaultAttributes = new HashMap<>();
+        JAttributeTextField<Color> colorField = new JAttributeTextField<>();
         configureJAttributeTextField(colorField, 7, "attribute.strokeColor.toolTopText");
         colorField.setFormatterFactory(ColorFormatter.createFormatterFactory(ColorFormatter.Format.RGB_INTEGER_SHORT, false, false));
         disposables.add(new FigureAttributeEditorHandler<Color>(STROKE_COLOR, defaultAttributes, colorField, editor, true));
         return colorField;
     }
 
-    private JAttributeTextField<Double> OpacityField() {
-        JAttributeTextField<Double> opacityField = new JAttributeTextField<Double>();
+    private JAttributeTextField<Double> createOpacityField() {
+        JAttributeTextField<Double> opacityField = new JAttributeTextField<>();
         configureJAttributeTextField(opacityField, 4, "attribute.strokeOpacity.toolTopText");
         addNumberFormatterToTextField(opacityField, 0d, 100d, 100d, false, "%");
         disposables.add(new FigureAttributeEditorHandler<Double>(STROKE_OPACITY, opacityField, editor));
         return opacityField;
     }
 
-    private JAttributeTextField<Double> StrokeWidthField() {
-        JAttributeTextField<Double> strokeWidthField = new JAttributeTextField<Double>();
+    private JAttributeTextField<Double> createStrokeWidthField() {
+        JAttributeTextField<Double> strokeWidthField = new JAttributeTextField<>();
         configureJAttributeTextField(strokeWidthField, 2, "attribute.strokeWidth.toolTopText");
         addNumberFormatterToTextField(strokeWidthField, 0d, 100d, 1d, false, "");
         disposables.add(new FigureAttributeEditorHandler<Double>(STROKE_WIDTH, strokeWidthField, editor));
         return strokeWidthField;
     }
 
-    private JAttributeTextField<Double> CreateDashField() {
-        JAttributeTextField<Double> dashOffsetField = new JAttributeTextField<Double>();
+    private JAttributeTextField<Double> createDashField() {
+        JAttributeTextField<Double> dashOffsetField = new JAttributeTextField<>();
         configureJAttributeTextField(dashOffsetField, 1, "attribute.strokeDashOffset.toolTopText");
         dashOffsetField.setFormatterFactory(JavaNumberFormatter.createFormatterFactory(-1000d, 1000d, 1d));
         disposables.add(new FigureAttributeEditorHandler<Double>(STROKE_DASH_PHASE, dashOffsetField, editor));
@@ -212,7 +212,7 @@ public class StrokeToolBar extends AbstractToolBar {
         switch (state) {
             case 1:
                 try {
-                    CreateState1(p);
+                    createState1(p);
                 } catch (Exception e) {
                     System.err.println("Error creating state 1");
                     e.printStackTrace();
@@ -220,9 +220,9 @@ public class StrokeToolBar extends AbstractToolBar {
                 break;
             case 2:
                 try {
-                    CreateState2(p);
+                    createState2(p);
                 } catch (Exception e) {
-                    System.err.println("Error creating state 1");
+                    System.err.println("Error creating state 2");
                     e.printStackTrace();
                 }
                 break;
@@ -232,27 +232,27 @@ public class StrokeToolBar extends AbstractToolBar {
         return p;
     }
 
-    private void CreateState1(JPanel p) {
-        p.add(StrokeColor(), createGridBagConstraints(0, -1, 1, null));
-        p.add(OpacitySlider(), createGridBagConstraints(0, -1, 1, new Insets(3, 0, 0, 0)));
-        p.add(CreateStrokeWithPopupSlider(), createGridBagConstraints(0, -1, 1, new Insets(3, 0, 0, 0)));
+    private void createState1(JPanel p) {
+        p.add(createStrokeColor(), createGridBagConstraints(0, -1, 1, null));
+        p.add(createOpacitySlider(), createGridBagConstraints(0, -1, 1, new Insets(3, 0, 0, 0)));
+        p.add(createStrokeWidthPopupSlider(), createGridBagConstraints(0, -1, 1, new Insets(3, 0, 0, 0)));
         p.add(createStrokeJoinButton(), createGridBagConstraints(-1, 0, 1, new Insets(0, 3, 0, 0)));
         p.add(createStrokeCapButton(), createGridBagConstraints(-1, 1, 1, new Insets(3, 3, 0, 0)));
         p.add(createStrokeDashesButton(), createGridBagConstraints(-1, 2, GridBagConstraints.REMAINDER, new Insets(3, 3, 0, 0)));
     }
 
-    private void CreateState2(JPanel p) {
+    private void createState2(JPanel p) {
 
-        p.add(StrokeColorField(), createGridBagConstraints(0, 0, 3, new Insets(3, 3, 0, 0), GridBagConstraints.HORIZONTAL, 0.0, 0.0));
-        p.add(StrokeColor(), createGridBagConstraints(3, -1, 1, null));
+        p.add(strokeColorField(), createGridBagConstraints(0, 0, 3, new Insets(3, 3, 0, 0), GridBagConstraints.HORIZONTAL, 0.0, 0.0));
+        p.add(createStrokeColor(), createGridBagConstraints(3, -1, 1, null));
 
-        p.add(OpacityField(), createGridBagConstraints(0, -1, 1, new Insets(3, 0, 0, 0), GridBagConstraints.HORIZONTAL, 0.0, 0.0));
-        p.add(OpacitySlider(), createGridBagConstraints(1, -1, 1, new Insets(3, 0, 0, 0), GridBagConstraints.HORIZONTAL, 0.0, 1f));
+        p.add(createOpacityField(), createGridBagConstraints(0, -1, 1, new Insets(3, 0, 0, 0), GridBagConstraints.HORIZONTAL, 0.0, 0.0));
+        p.add(createOpacitySlider(), createGridBagConstraints(1, -1, 1, new Insets(3, 0, 0, 0), GridBagConstraints.HORIZONTAL, 0.0, 1f));
 
-        p.add(StrokeWidthField(), createGridBagConstraints(0, 2, 1, new Insets(3, 0, 0, 0), GridBagConstraints.BOTH, 0.0, 0.0));
-        p.add(CreateStrokeWithPopupSlider(), createGridBagConstraints(1, 2, 2, new Insets(3, 0, 0, 0)));
+        p.add(createStrokeWidthField(), createGridBagConstraints(0, 2, 1, new Insets(3, 0, 0, 0), GridBagConstraints.BOTH, 0.0, 0.0));
+        p.add(createStrokeWidthPopupSlider(), createGridBagConstraints(1, 2, 1, new Insets(3, 0, 0, 0)));
 
-        p.add(CreateDashField(), createGridBagConstraints(2, 2, 2, new Insets(3, 3, 0, 0), GridBagConstraints.BOTH, 0.0, 0.0));
+        p.add(createDashField(), createGridBagConstraints(2, 2, 2, new Insets(3, 3, 0, 0), GridBagConstraints.BOTH, 0.0, 0.0));
 
         p.add(createStrokeDashesButton(), createGridBagConstraints(4, 2, GridBagConstraints.REMAINDER, new Insets(3, 3, 0, 0)));
 
@@ -271,16 +271,6 @@ public class StrokeToolBar extends AbstractToolBar {
         return 1;
     }
 
-    /**
-     * This method is called from within the constructor to
-     * initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is
-     * always regenerated by the Form Editor.
-     */
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
-        setOpaque(false);
-    }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
 }
