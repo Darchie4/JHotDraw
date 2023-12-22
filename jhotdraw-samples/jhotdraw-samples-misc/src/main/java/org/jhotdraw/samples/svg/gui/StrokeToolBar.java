@@ -47,13 +47,14 @@ public class StrokeToolBar extends AbstractToolBar {
 
     private static final long serialVersionUID = 1L;
     private SelectionComponentDisplayer displayer;
+    private ResourceBundleUtil labels;
 
     /**
      * Creates new instance.
      */
     @FeatureEntryPoint(value = "strokeCreation")
     public StrokeToolBar() {
-        ResourceBundleUtil labels = ResourceBundleUtil.getBundle("org.jhotdraw.samples.svg.Labels");
+        labels = ResourceBundleUtil.getBundle("org.jhotdraw.samples.svg.Labels");
         setName(labels.getString("stroke.toolbar"));
         setDisclosureStateCount(3);
     }
@@ -93,103 +94,85 @@ public class StrokeToolBar extends AbstractToolBar {
         return gbc;
     }
 
-    private void StrokeColor(JPanel p, ResourceBundleUtil labels) {
+
+    private void configureJAttributeTextField(JAttributeTextField<?> textField, int columns, String toolTipKey) {
+        textField.setColumns(columns);
+        textField.setToolTipText(labels.getString(toolTipKey));
+        textField.setHorizontalAlignment(JTextField.LEFT);
+        textField.putClientProperty("Palette.Component.segmentPosition", "first");
+        textField.setUI((PaletteFormattedTextFieldUI) PaletteFormattedTextFieldUI.createUI(textField));
+    }
+
+    private JPopupButton StrokeColor() {
         Map<AttributeKey<?>, Object> defaultAttributes = new HashMap<AttributeKey<?>, Object>();
         STROKE_GRADIENT.put(defaultAttributes, null);
-        AbstractButton btn = ButtonFactory.createSelectionColorChooserButton(editor,
+        JPopupButton btn = ButtonFactory.createSelectionColorChooserButton(editor,
                 STROKE_COLOR, "attribute.strokeColor", labels,
                 defaultAttributes, new Rectangle(3, 3, 10, 10), PaletteColorChooserUI.class, disposables);
         btn.setUI((PaletteButtonUI) PaletteButtonUI.createUI(btn));
-        ((JPopupButton) btn).setAction(null, null);
-        GridBagConstraints gbc = createGridBagConstraints(0, -1, 1, null);
-        p.add(btn, gbc);
+        btn.setAction(null, null);
+        return btn;
     }
 
-    private void OpacitySlider(JPanel p, ResourceBundleUtil labels) {
+    private JPopupButton OpacitySlider() {
 
-        JPopupButton opacityPopupButton = new JPopupButton();
-        JAttributeSlider opacitySlider = new JAttributeSlider(JSlider.VERTICAL, 0, 100, 100);
-        opacityPopupButton.add(opacitySlider);
-        labels.configureToolBarButton(opacityPopupButton, "attribute.strokeOpacity");
-        opacityPopupButton.setUI((PaletteButtonUI) PaletteButtonUI.createUI(opacityPopupButton));
-        opacityPopupButton.setIcon(
-                new SelectionOpacityIcon(editor, STROKE_OPACITY, null, STROKE_COLOR, Images.createImage(getClass(), labels.getString("attribute.strokeOpacity.largeIcon")),
-                        new Rectangle(5, 5, 6, 6), new Rectangle(4, 4, 7, 7)));
-        opacityPopupButton.setPopupAnchor(SOUTH_EAST);
-        disposables.add(new SelectionComponentRepainter(editor, opacityPopupButton));
-        GridBagConstraints gbc = createGridBagConstraints(0, -1, 1, new Insets(3, 0, 0, 0));
-        p.add(opacityPopupButton, gbc);
-        opacitySlider.setUI((SliderUI) PaletteSliderUI.createUI(opacitySlider));
-        opacitySlider.setScaleFactor(100d);
-        disposables.add(new FigureAttributeEditorHandler<Double>(STROKE_OPACITY, opacitySlider, editor));
+        return createButtonWithSlider(JPopupButton.VERTICAL, 0, 100, 100, "attribute.strokeOpacity", STROKE_OPACITY, 100d);
     }
 
-    private void CreateStrokeWithPopupSlider(JPanel p, ResourceBundleUtil labels) {
-        JPopupButton strokeWidthPopupButton = new JPopupButton();
-        JAttributeSlider strokeWidthSlider = new JAttributeSlider(
-                JSlider.VERTICAL, 0, 50, 1);
-        strokeWidthSlider.setUI((SliderUI) PaletteSliderUI.createUI(strokeWidthSlider));
-        strokeWidthPopupButton.add(strokeWidthSlider);
-        labels.configureToolBarButton(strokeWidthPopupButton, "attribute.strokeWidth");
-        strokeWidthPopupButton.setUI((PaletteButtonUI) PaletteButtonUI.createUI(strokeWidthPopupButton));
-        GridBagConstraints gbc = createGridBagConstraints(0, -1, 1, new Insets(3, 0, 0, 0));
-        p.add(strokeWidthPopupButton, gbc);
-        disposables.add(new FigureAttributeEditorHandler<Double>(STROKE_WIDTH, strokeWidthSlider, editor));
+    private JPopupButton CreateStrokeWithPopupSlider() {
+
+        return createButtonWithSlider(JSlider.VERTICAL, 0, 100, 10, "attribute.strokeWidth", STROKE_WIDTH, 1d);
     }
 
-    private void createStrokeDashesButtons(JPanel p, ResourceBundleUtil labels) {
-        AbstractButton btn = ButtonFactory.createStrokeJoinButton(editor, labels, disposables);
+    private JPopupButton createStrokeJoinButton() {
+        JPopupButton btn = ButtonFactory.createStrokeJoinButton(editor, labels, disposables);
         btn.setUI((PaletteButtonUI) PaletteButtonUI.createUI(btn));
-        GridBagConstraints gbc = createGridBagConstraints(-1, 0, 1, new Insets(0, 3, 0, 0));
-        p.add(btn, gbc);
-        btn = ButtonFactory.createStrokeCapButton(editor, labels, disposables);
-        btn.setUI((PaletteButtonUI) PaletteButtonUI.createUI(btn));
-        gbc = createGridBagConstraints(-1, 1, 1, new Insets(3, 3, 0, 0));
-        p.add(btn, gbc);
-        btn = ButtonFactory.createStrokeDashesButton(editor, new double[][]{
-                null,
-                {4d, 4d},
-                {2d, 2d},
-                {4d, 2d},
-                {2d, 4d},
-                {8d, 2d},
-                {6d, 2d, 2d, 2d}}, labels, disposables);
-        btn.setUI((PaletteButtonUI) PaletteButtonUI.createUI(btn));
-        gbc = createGridBagConstraints(-1, 2, GridBagConstraints.REMAINDER, new Insets(3, 3, 0, 0));
-        p.add(btn, gbc);
-
+        return btn;
     }
 
-    private void StrokeColorFieldAndButton(JPanel p, ResourceBundleUtil labels) {
+    private JPopupButton createStrokeDashesButton() {
+        JPopupButton btn = ButtonFactory.createStrokeDashesButton(editor, labels);
+        btn.setUI((PaletteButtonUI) PaletteButtonUI.createUI(btn));
+        return btn;
+    }
+
+    private JPopupButton createStrokeCapButton() {
+        JPopupButton btn = ButtonFactory.createStrokeCapButton(editor, labels, disposables);
+        btn.setUI((PaletteButtonUI) PaletteButtonUI.createUI(btn));
+        return btn;
+    }
+
+    private JPopupButton createButtonWithSlider(int direction, int min, int max, int currentValue, String toolName, AttributeKey<Double> attribute, double scaleFactor) {
+
+        JPopupButton btn = new JPopupButton();
+        JAttributeSlider slider = new JAttributeSlider(
+                direction, min, max, currentValue);
+        slider.setUI((SliderUI) PaletteSliderUI.createUI(slider));
+        btn.add(slider);
+        labels.configureToolBarButton(btn, toolName);
+        btn.setUI((PaletteButtonUI) PaletteButtonUI.createUI(btn));
+        slider.setScaleFactor(scaleFactor);
+        disposables.add(new FigureAttributeEditorHandler<Double>(attribute, slider, editor));
+        return btn;
+    }
+
+
+    private void StrokeColorFieldAndButton(JPanel p) {
         HashMap<AttributeKey<?>, Object> defaultAttributes = new HashMap<AttributeKey<?>, Object>();
         STROKE_GRADIENT.put(defaultAttributes, null);
         JAttributeTextField<Color> colorField = new JAttributeTextField<Color>();
-        colorField.setColumns(7);
-        colorField.setToolTipText(labels.getString("attribute.strokeColor.toolTipText"));
-        colorField.putClientProperty("Palette.Component.segmentPosition", "first");
-        colorField.setUI((PaletteFormattedTextFieldUI) PaletteFormattedTextFieldUI.createUI(colorField));
+        configureJAttributeTextField(colorField, 7, "attribute.strokeColor.toolTopText");
         colorField.setFormatterFactory(ColorFormatter.createFormatterFactory(ColorFormatter.Format.RGB_INTEGER_SHORT, false, false));
-        colorField.setHorizontalAlignment(JTextField.LEFT);
         disposables.add(new FigureAttributeEditorHandler<Color>(STROKE_COLOR, defaultAttributes, colorField, editor, true));
         GridBagConstraints gbc = createGridBagConstraints(0, 0, 3, new Insets(3, 3, 0, 0), GridBagConstraints.HORIZONTAL, 0.0, 0.0);
         p.add(colorField, gbc);
-        AbstractButton btn = ButtonFactory.createSelectionColorChooserButton(editor,
-                STROKE_COLOR, "attribute.strokeColor", labels,
-                defaultAttributes, new Rectangle(3, 3, 10, 10), PaletteColorChooserUI.class, disposables);
-        btn.setUI((PaletteButtonUI) PaletteButtonUI.createUI(btn));
-        ((JPopupButton) btn).setAction(null, null);
         gbc = createGridBagConstraints(3, -1, 1, null);
-        p.add(btn, gbc);
+        p.add(StrokeColor(), gbc);
     }
 
-    private void OpacityFieldAndSlider(JPanel p, ResourceBundleUtil labels) {
+    private void OpacityFieldAndSlider(JPanel p) {
         JAttributeTextField<Double> opacityField = new JAttributeTextField<Double>();
-        opacityField.setColumns(4);
-        opacityField.setToolTipText(labels.getString("attribute.strokeOpacity.toolTipText"));
-        opacityField.setHorizontalAlignment(JAttributeTextField.RIGHT);
-        opacityField.putClientProperty("Palette.Component.segmentPosition", "first");
-        opacityField.setUI((PaletteFormattedTextFieldUI) PaletteFormattedTextFieldUI.createUI(opacityField));
-        opacityField.setHorizontalAlignment(JTextField.LEFT);
+        configureJAttributeTextField(opacityField, 4, "attribute.strokeOpacity.toolTopText");
         JavaNumberFormatter formatter = new JavaNumberFormatter(0d, 100d, 100d, false, "%");
         formatter.setUsesScientificNotation(false);
         formatter.setMaximumFractionDigits(1);
@@ -197,30 +180,18 @@ public class StrokeToolBar extends AbstractToolBar {
         disposables.add(new FigureAttributeEditorHandler<Double>(STROKE_OPACITY, opacityField, editor));
         GridBagConstraints gbc = createGridBagConstraints(0, -1, 1, new Insets(3, 0, 0, 0), GridBagConstraints.HORIZONTAL, 0.0, 0.0);
         p.add(opacityField, gbc);
-        JPopupButton opacityPopupButton = new JPopupButton();
-        JAttributeSlider opacitySlider = new JAttributeSlider(JSlider.VERTICAL, 0, 100, 100);
-        opacityPopupButton.add(opacitySlider);
-        labels.configureToolBarButton(opacityPopupButton, "attribute.strokeOpacity");
-        opacityPopupButton.setUI((PaletteButtonUI) PaletteButtonUI.createUI(opacityPopupButton));
+         JPopupButton opacityPopupButton = OpacitySlider();
         opacityPopupButton.setIcon(
                 new SelectionOpacityIcon(editor, STROKE_OPACITY, null, STROKE_COLOR, Images.createImage(getClass(), labels.getString("attribute.strokeOpacity.largeIcon")),
                         new Rectangle(5, 5, 6, 6), new Rectangle(4, 4, 7, 7)));
         opacityPopupButton.setPopupAnchor(SOUTH_EAST);
-        disposables.add(new SelectionComponentRepainter(editor, opacityPopupButton));
         gbc = createGridBagConstraints(1, -1, 1, new Insets(3, 0, 0, 0), GridBagConstraints.HORIZONTAL, 0.0, 1f);
         p.add(opacityPopupButton, gbc);
-        opacitySlider.setUI((SliderUI) PaletteSliderUI.createUI(opacitySlider));
-        opacitySlider.setScaleFactor(100d);
-        disposables.add(new FigureAttributeEditorHandler<Double>(STROKE_OPACITY, opacitySlider, editor));
     }
 
-    private void StrokeWidthFieldAndPopupSlider(JPanel p, ResourceBundleUtil labels) {
+    private void StrokeWidthFieldAndPopupSlider(JPanel p) {
         JAttributeTextField<Double> strokeWidthField = new JAttributeTextField<Double>();
-        strokeWidthField.setColumns(2);
-        strokeWidthField.setToolTipText(labels.getString("attribute.strokeWidth.toolTipText"));
-        strokeWidthField.setHorizontalAlignment(JAttributeTextField.LEFT);
-        strokeWidthField.putClientProperty("Palette.Component.segmentPosition", "first");
-        strokeWidthField.setUI((PaletteFormattedTextFieldUI) PaletteFormattedTextFieldUI.createUI(strokeWidthField));
+        configureJAttributeTextField(strokeWidthField, 2, "attribute.strokeWidth.toolTopText");
         JavaNumberFormatter formatter = new JavaNumberFormatter(0d, 100d, 1d);
         formatter.setUsesScientificNotation(false);
         formatter.setMaximumFractionDigits(1);
@@ -228,49 +199,19 @@ public class StrokeToolBar extends AbstractToolBar {
         disposables.add(new FigureAttributeEditorHandler<Double>(STROKE_WIDTH, strokeWidthField, editor));
         GridBagConstraints gbc = createGridBagConstraints(0, 2, 1, new Insets(3, 0, 0, 0), GridBagConstraints.BOTH, 0.0, 0.0);
         p.add(strokeWidthField, gbc);
-        JPopupButton strokeWidthPopupButton = new JPopupButton();
-        JAttributeSlider strokeWidthSlider = new JAttributeSlider(
-                JSlider.VERTICAL, 0, 50, 1);
-        strokeWidthSlider.setUI((SliderUI) PaletteSliderUI.createUI(strokeWidthSlider));
-        strokeWidthPopupButton.add(strokeWidthSlider);
-        labels.configureToolBarButton(strokeWidthPopupButton, "attribute.strokeWidth");
-        strokeWidthPopupButton.setUI((PaletteButtonUI) PaletteButtonUI.createUI(strokeWidthPopupButton));
         gbc = createGridBagConstraints(1, 2, 1, new Insets(3, 0, 0, 0));
-        p.add(strokeWidthPopupButton, gbc);
-        disposables.add(new FigureAttributeEditorHandler<Double>(STROKE_WIDTH, strokeWidthSlider, editor));
-        AbstractButton btn = ButtonFactory.createStrokeJoinButton(editor, labels, disposables);
-        btn.setUI((PaletteButtonUI) PaletteButtonUI.createUI(btn));
-        gbc = createGridBagConstraints(4, 0, 2, new Insets(0, 3, 0, 0));
-        p.add(btn, gbc);
-        btn = ButtonFactory.createStrokeCapButton(editor, labels, disposables);
-        btn.setUI((PaletteButtonUI) PaletteButtonUI.createUI(btn));
-        gbc = createGridBagConstraints(4, 1, 1, new Insets(3, 3, 0, 0));
-        p.add(btn, gbc);
+        p.add(CreateStrokeWithPopupSlider(), gbc);
     }
 
-    private void CreateDashField(JPanel p, ResourceBundleUtil labels) {
+    private void CreateDashField(JPanel p) {
         JAttributeTextField<Double> dashOffsetField = new JAttributeTextField<Double>();
-        dashOffsetField.setColumns(1);
-        dashOffsetField.setToolTipText(labels.getString("attribute.strokeDashPhase.toolTipText"));
-        dashOffsetField.setHorizontalAlignment(JAttributeTextField.LEFT);
-        //dashOffsetField.putClientProperty("Palette.Component.segmentPosition", "first");
-        dashOffsetField.setUI((PaletteFormattedTextFieldUI) PaletteFormattedTextFieldUI.createUI(dashOffsetField));
+        configureJAttributeTextField(dashOffsetField, 1, "attribute.strokeDashOffset.toolTopText");
         dashOffsetField.setFormatterFactory(JavaNumberFormatter.createFormatterFactory(-1000d, 1000d, 1d));
         disposables.add(new FigureAttributeEditorHandler<Double>(STROKE_DASH_PHASE, dashOffsetField, editor));
         GridBagConstraints gbc = createGridBagConstraints(2, 2, 2, new Insets(3, 3, 0, 0), GridBagConstraints.BOTH, 0.0, 0.0);
         p.add(dashOffsetField, gbc);
-        AbstractButton btn = ButtonFactory.createStrokeDashesButton(editor, new double[][]{
-                null,
-                {4d, 4d},
-                {2d, 2d},
-                {4d, 2d},
-                {2d, 4d},
-                {8d, 2d},
-                {6d, 2d, 2d, 2d}}, labels, disposables);
-
-        btn.setUI((PaletteButtonUI) PaletteButtonUI.createUI(btn));
         gbc = createGridBagConstraints(4, 2, GridBagConstraints.REMAINDER, new Insets(3, 3, 0, 0));
-        p.add(btn, gbc);
+        p.add(createStrokeDashesButton(), gbc);
     }
 
     @FeatureEntryPoint(value = "stroketool")
@@ -283,25 +224,29 @@ public class StrokeToolBar extends AbstractToolBar {
         if (editor == null) {
             return p;
         }
-
-        ResourceBundleUtil labels = ResourceBundleUtil.getBundle("org.jhotdraw.samples.svg.Labels");
         GridBagLayout layout = new GridBagLayout();
         p.setLayout(layout);
-        GridBagConstraints gbc = null;
-        AbstractButton btn = null;
 
         switch (state) {
             case 1:
-                StrokeColor(p, labels);
-                OpacitySlider(p, labels);
-                CreateStrokeWithPopupSlider(p, labels);
-                createStrokeDashesButtons(p, labels);
+                p.add(StrokeColor(), createGridBagConstraints(0, -1, 1, null));
+
+                JPopupButton OpacityPopupButtonWithSlider = OpacitySlider();
+                p.add(OpacityPopupButtonWithSlider, createGridBagConstraints(0, -1, 1, new Insets(3, 0, 0, 0)));
+                disposables.add(new SelectionComponentRepainter(editor, OpacityPopupButtonWithSlider));
+
+                p.add(CreateStrokeWithPopupSlider(), createGridBagConstraints(0, -1, 1, new Insets(3, 0, 0, 0)));
+                p.add(createStrokeJoinButton(), createGridBagConstraints(-1, 0, 1, new Insets(0, 3, 0, 0)));
+                p.add(createStrokeCapButton(), createGridBagConstraints(-1, 1, 1, new Insets(3, 3, 0, 0)));
+                p.add(createStrokeDashesButton(), createGridBagConstraints(-1, 2, GridBagConstraints.REMAINDER, new Insets(3, 3, 0, 0)));
                 break;
             case 2:
-                StrokeColorFieldAndButton(p, labels);
-                OpacityFieldAndSlider(p, labels);
-                StrokeWidthFieldAndPopupSlider(p, labels);
-                CreateDashField(p, labels);
+                StrokeColorFieldAndButton(p);
+                OpacityFieldAndSlider(p);
+                StrokeWidthFieldAndPopupSlider(p);
+                CreateDashField(p);
+                p.add(createStrokeJoinButton(), createGridBagConstraints(4, 0, 2, new Insets(0, 3, 0, 0)));
+                p.add(createStrokeCapButton(), createGridBagConstraints(4, 1, 1, new Insets(3, 3, 0, 0)));
                 break;
         }
         return p;
