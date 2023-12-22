@@ -52,7 +52,6 @@ public class StrokeToolBar extends AbstractToolBar {
     /**
      * Creates new instance.
      */
-    @FeatureEntryPoint(value = "strokeCreation")
     public StrokeToolBar() {
         labels = ResourceBundleUtil.getBundle("org.jhotdraw.samples.svg.Labels");
         setName(labels.getString("stroke.toolbar"));
@@ -94,6 +93,12 @@ public class StrokeToolBar extends AbstractToolBar {
         return gbc;
     }
 
+    private void addNumberFormatterToTextField(JAttributeTextField<Double> component, double min, double max, double mulitiplier, boolean allowNull, String unit) {
+        JavaNumberFormatter formatter = new JavaNumberFormatter(min, max, mulitiplier, allowNull, unit);
+        formatter.setUsesScientificNotation(false);
+        formatter.setMaximumFractionDigits(1);
+        component.setFormatterFactory(new DefaultFormatterFactory(formatter));
+    }
 
     private void configureJAttributeTextField(JAttributeTextField<?> textField, int columns, String toolTipKey) {
         textField.setColumns(columns);
@@ -159,7 +164,7 @@ public class StrokeToolBar extends AbstractToolBar {
 
     private void StrokeColorFieldAndButton(JPanel p) {
         HashMap<AttributeKey<?>, Object> defaultAttributes = new HashMap<AttributeKey<?>, Object>();
-        STROKE_GRADIENT.put(defaultAttributes, null);
+       // STROKE_GRADIENT.put(defaultAttributes, null);
         JAttributeTextField<Color> colorField = new JAttributeTextField<Color>();
         configureJAttributeTextField(colorField, 7, "attribute.strokeColor.toolTopText");
         colorField.setFormatterFactory(ColorFormatter.createFormatterFactory(ColorFormatter.Format.RGB_INTEGER_SHORT, false, false));
@@ -173,18 +178,12 @@ public class StrokeToolBar extends AbstractToolBar {
     private void OpacityFieldAndSlider(JPanel p) {
         JAttributeTextField<Double> opacityField = new JAttributeTextField<Double>();
         configureJAttributeTextField(opacityField, 4, "attribute.strokeOpacity.toolTopText");
-        JavaNumberFormatter formatter = new JavaNumberFormatter(0d, 100d, 100d, false, "%");
-        formatter.setUsesScientificNotation(false);
-        formatter.setMaximumFractionDigits(1);
-        opacityField.setFormatterFactory(new DefaultFormatterFactory(formatter));
+        addNumberFormatterToTextField(opacityField, 0d, 100d, 100d, false, "%");
         disposables.add(new FigureAttributeEditorHandler<Double>(STROKE_OPACITY, opacityField, editor));
         GridBagConstraints gbc = createGridBagConstraints(0, -1, 1, new Insets(3, 0, 0, 0), GridBagConstraints.HORIZONTAL, 0.0, 0.0);
         p.add(opacityField, gbc);
-         JPopupButton opacityPopupButton = OpacitySlider();
-        opacityPopupButton.setIcon(
-                new SelectionOpacityIcon(editor, STROKE_OPACITY, null, STROKE_COLOR, Images.createImage(getClass(), labels.getString("attribute.strokeOpacity.largeIcon")),
-                        new Rectangle(5, 5, 6, 6), new Rectangle(4, 4, 7, 7)));
-        opacityPopupButton.setPopupAnchor(SOUTH_EAST);
+        JPopupButton opacityPopupButton = OpacitySlider();
+
         gbc = createGridBagConstraints(1, -1, 1, new Insets(3, 0, 0, 0), GridBagConstraints.HORIZONTAL, 0.0, 1f);
         p.add(opacityPopupButton, gbc);
     }
@@ -192,10 +191,7 @@ public class StrokeToolBar extends AbstractToolBar {
     private void StrokeWidthFieldAndPopupSlider(JPanel p) {
         JAttributeTextField<Double> strokeWidthField = new JAttributeTextField<Double>();
         configureJAttributeTextField(strokeWidthField, 2, "attribute.strokeWidth.toolTopText");
-        JavaNumberFormatter formatter = new JavaNumberFormatter(0d, 100d, 1d);
-        formatter.setUsesScientificNotation(false);
-        formatter.setMaximumFractionDigits(1);
-        strokeWidthField.setFormatterFactory(new DefaultFormatterFactory(formatter));
+        addNumberFormatterToTextField(strokeWidthField, 0d, 100d, 1d, false, "");
         disposables.add(new FigureAttributeEditorHandler<Double>(STROKE_WIDTH, strokeWidthField, editor));
         GridBagConstraints gbc = createGridBagConstraints(0, 2, 1, new Insets(3, 0, 0, 0), GridBagConstraints.BOTH, 0.0, 0.0);
         p.add(strokeWidthField, gbc);
@@ -214,7 +210,7 @@ public class StrokeToolBar extends AbstractToolBar {
         p.add(createStrokeDashesButton(), gbc);
     }
 
-    @FeatureEntryPoint(value = "stroketool")
+    @FeatureEntryPoint(value = "stroke_tool")
     @Override
     protected JComponent createDisclosedComponent(int state) {
         JPanel p = new JPanel();
