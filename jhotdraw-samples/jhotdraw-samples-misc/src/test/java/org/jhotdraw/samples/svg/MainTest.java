@@ -18,8 +18,7 @@
  */
 package org.jhotdraw.samples.svg;
 
-import org.jhotdraw.undo.LabelPath;
-import org.jhotdraw.util.ResourceBundleUtil;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import static java.lang.Thread.sleep;
@@ -34,6 +33,7 @@ public class MainTest {
      * Test of main method, of class Main.
      */
     @Test
+    @Ignore("Needs a GUI")
     public void testMain() {
 
         System.out.println("main");
