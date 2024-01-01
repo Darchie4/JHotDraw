@@ -6,16 +6,17 @@
 package org.jhotdraw.samples.teddy;
 
 import org.jhotdraw.api.app.Application;
-import java.awt.*;
-import java.util.prefs.*;
-import javax.swing.*;
-import javax.swing.border.*;
-import javax.swing.text.*;
 import org.jhotdraw.samples.teddy.regex.MatchType;
 import org.jhotdraw.samples.teddy.regex.Matcher;
 import org.jhotdraw.undo.CompositeEdit;
-import org.jhotdraw.util.*;
-import org.jhotdraw.util.prefs.*;
+import org.jhotdraw.util.ResourceBundleUtil;
+import org.jhotdraw.util.prefs.PreferencesUtil;
+
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import javax.swing.text.DefaultEditorKit;
+import java.awt.*;
+import java.util.prefs.Preferences;
 
 /**
  *

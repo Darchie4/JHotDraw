@@ -7,8 +7,10 @@
  */
 package org.jhotdraw.datatransfer;
 
-import java.awt.datatransfer.*;
-import java.io.*;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.UnsupportedFlavorException;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 
 /**
  * A Transferable with an InputStream as its transfer class.

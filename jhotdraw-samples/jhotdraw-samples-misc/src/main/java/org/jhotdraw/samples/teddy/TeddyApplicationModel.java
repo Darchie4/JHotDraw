@@ -7,8 +7,6 @@
  */
 package org.jhotdraw.samples.teddy;
 
-import java.util.*;
-import javax.swing.*;
 import org.jhotdraw.api.app.Application;
 import org.jhotdraw.api.app.ApplicationModel;
 import org.jhotdraw.api.app.MenuBuilder;
@@ -22,6 +20,10 @@ import org.jhotdraw.samples.teddy.action.ToggleLineNumbersAction;
 import org.jhotdraw.samples.teddy.action.ToggleLineWrapAction;
 import org.jhotdraw.samples.teddy.action.ToggleStatusBarAction;
 import org.jhotdraw.util.ActionUtil;
+
+import javax.swing.*;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Provides meta-data and factory methods for an application.

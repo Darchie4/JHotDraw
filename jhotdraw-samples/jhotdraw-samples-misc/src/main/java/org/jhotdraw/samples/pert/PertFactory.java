@@ -7,19 +7,19 @@
  */
 package org.jhotdraw.samples.pert;
 
-import org.jhotdraw.draw.figure.GroupFigure;
-import org.jhotdraw.draw.figure.TextAreaFigure;
-import org.jhotdraw.draw.figure.TextFigure;
-import org.jhotdraw.draw.figure.ListFigure;
-import org.jhotdraw.draw.*;
+import org.jhotdraw.draw.DefaultDrawing;
 import org.jhotdraw.draw.connector.ChopRectangleConnector;
 import org.jhotdraw.draw.connector.LocatorConnector;
 import org.jhotdraw.draw.decoration.ArrowTip;
+import org.jhotdraw.draw.figure.GroupFigure;
+import org.jhotdraw.draw.figure.ListFigure;
+import org.jhotdraw.draw.figure.TextAreaFigure;
+import org.jhotdraw.draw.figure.TextFigure;
 import org.jhotdraw.draw.locator.RelativeLocator;
 import org.jhotdraw.samples.pert.figures.DependencyFigure;
 import org.jhotdraw.samples.pert.figures.SeparatorLineFigure;
 import org.jhotdraw.samples.pert.figures.TaskFigure;
-import org.jhotdraw.xml.*;
+import org.jhotdraw.xml.DefaultDOMFactory;
 
 /**
  * PertFactory.

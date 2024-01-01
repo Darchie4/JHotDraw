@@ -7,7 +7,8 @@
  */
 package org.jhotdraw.datatransfer;
 
-import java.awt.datatransfer.*;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.Transferable;
 
 /**
  * Base class for transferable objects.

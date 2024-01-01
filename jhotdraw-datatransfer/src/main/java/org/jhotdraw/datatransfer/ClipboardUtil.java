@@ -8,7 +8,7 @@
  */
 package org.jhotdraw.datatransfer;
 
-import java.awt.Toolkit;
+import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 
 /**

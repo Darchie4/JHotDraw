@@ -8,12 +8,17 @@
 package org.jhotdraw.draw.action;
 
 import dk.sdu.mmmi.featuretracer.lib.FeatureEntryPoint;
+import org.jhotdraw.draw.Drawing;
+import org.jhotdraw.draw.DrawingEditor;
+import org.jhotdraw.draw.DrawingView;
 import org.jhotdraw.draw.figure.Figure;
-import java.util.*;
-import javax.swing.undo.*;
-import org.jhotdraw.draw.*;
 import org.jhotdraw.util.ResourceBundleUtil;
-import dk.sdu.mmmi.featuretracer.lib.FeatureEntryPoint;
+
+import javax.swing.undo.AbstractUndoableEdit;
+import javax.swing.undo.CannotRedoException;
+import javax.swing.undo.CannotUndoException;
+import java.util.Collection;
+import java.util.LinkedList;
 
 /**
  * ToFrontAction.

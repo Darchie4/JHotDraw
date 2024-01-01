@@ -8,8 +8,9 @@
 package org.jhotdraw.datatransfer;
 
 import java.awt.datatransfer.*;
-import java.io.*;
-import java.util.*;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.LinkedList;
 
 /**
  * ComoositeTransferable.

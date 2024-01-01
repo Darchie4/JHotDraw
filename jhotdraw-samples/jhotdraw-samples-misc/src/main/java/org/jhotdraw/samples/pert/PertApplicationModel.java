@@ -7,11 +7,6 @@
  */
 package org.jhotdraw.samples.pert;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.util.*;
-import javax.swing.*;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import org.jhotdraw.action.view.ToggleViewPropertyAction;
 import org.jhotdraw.action.view.ViewPropertyAction;
 import org.jhotdraw.api.app.Application;
@@ -22,11 +17,7 @@ import org.jhotdraw.api.gui.URIChooser;
 import org.jhotdraw.app.DefaultApplicationModel;
 import org.jhotdraw.app.DefaultMenuBuilder;
 import org.jhotdraw.app.action.file.ExportFileAction;
-import org.jhotdraw.draw.AttributeKey;
-import org.jhotdraw.draw.AttributeKeys;
-import org.jhotdraw.draw.DefaultDrawingEditor;
-import org.jhotdraw.draw.DrawingEditor;
-import org.jhotdraw.draw.DrawingView;
+import org.jhotdraw.draw.*;
 import org.jhotdraw.draw.figure.TextAreaFigure;
 import org.jhotdraw.draw.tool.ConnectionTool;
 import org.jhotdraw.draw.tool.CreationTool;
@@ -36,7 +27,16 @@ import org.jhotdraw.gui.JFileURIChooser;
 import org.jhotdraw.gui.action.ButtonFactory;
 import org.jhotdraw.samples.pert.figures.DependencyFigure;
 import org.jhotdraw.samples.pert.figures.TaskFigure;
-import org.jhotdraw.util.*;
+import org.jhotdraw.util.ActionUtil;
+import org.jhotdraw.util.ResourceBundleUtil;
+
+import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.awt.*;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.util.HashMap;
+import java.util.LinkedList;
 
 /**
  * Provides meta-data and factory methods for an application.

@@ -7,27 +7,32 @@
  */
 package org.jhotdraw.samples.teddy;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.beans.*;
-import java.io.*;
-import java.lang.reflect.*;
-import java.net.URI;
-import java.util.prefs.*;
-import javax.swing.*;
-import javax.swing.event.*;
-import javax.swing.text.*;
-import javax.swing.undo.*;
 import org.jhotdraw.action.edit.RedoAction;
 import org.jhotdraw.action.edit.UndoAction;
 import org.jhotdraw.api.gui.URIChooser;
 import org.jhotdraw.app.AbstractView;
 import org.jhotdraw.gui.JFileURIChooser;
-import org.jhotdraw.samples.teddy.io.*;
-import org.jhotdraw.samples.teddy.regex.*;
-import org.jhotdraw.samples.teddy.text.*;
+import org.jhotdraw.samples.teddy.io.LFWriter;
+import org.jhotdraw.samples.teddy.regex.Matcher;
+import org.jhotdraw.samples.teddy.text.NumberedEditorKit;
+import org.jhotdraw.samples.teddy.text.NumberedViewFactory;
 import org.jhotdraw.undo.UndoRedoManager;
 import org.jhotdraw.util.prefs.PreferencesUtil;
+
+import javax.swing.*;
+import javax.swing.event.CaretEvent;
+import javax.swing.event.CaretListener;
+import javax.swing.text.*;
+import javax.swing.undo.UndoableEdit;
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.io.*;
+import java.lang.reflect.InvocationTargetException;
+import java.net.URI;
+import java.util.prefs.Preferences;
 
 /**
  * Provides a view on a text document.

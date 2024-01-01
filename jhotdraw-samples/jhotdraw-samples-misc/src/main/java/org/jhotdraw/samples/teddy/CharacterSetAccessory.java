@@ -7,11 +7,14 @@
  */
 package org.jhotdraw.samples.teddy;
 
-import java.nio.charset.*;
-import java.util.*;
-import java.util.prefs.*;
-import javax.swing.*;
 import org.jhotdraw.util.prefs.PreferencesUtil;
+
+import javax.swing.*;
+import java.nio.charset.Charset;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.SortedMap;
+import java.util.prefs.Preferences;
 
 /**
  * CharacterSetAccessory.

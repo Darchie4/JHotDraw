@@ -7,8 +7,9 @@
  */
 package org.jhotdraw.samples.teddy.text;
 
+import javax.swing.text.Element;
+import javax.swing.text.ParagraphView;
 import java.awt.*;
-import javax.swing.text.*;
 
 /**
  * NumberedParagraphView.
