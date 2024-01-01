@@ -2,10 +2,7 @@ package org.jhotdraw.undo.BDDTests;
 
 import com.tngtech.jgiven.Stage;
 import com.tngtech.jgiven.annotation.ExpectedScenarioState;
-import com.tngtech.jgiven.annotation.ProvidedScenarioState;
-import org.jhotdraw.undo.CompositeEdit;
 import org.jhotdraw.undo.UndoRedoManager;
-import org.testng.annotations.BeforeSuite;
 
 import javax.swing.undo.CannotRedoException;
 import javax.swing.undo.CannotUndoException;
@@ -16,14 +13,34 @@ public class RedoBDDTestStage extends Stage<RedoBDDTestStage> {
     @ExpectedScenarioState
     private UndoRedoManager undoRedoManager = new UndoRedoManager();
 
-    @ProvidedScenarioState
-    private boolean redoResult;
-
     public RedoBDDTestStage a_user_has_used_the_undo_feature() {
         // Simulate a user using the undo feature
-        undoRedoManager.addEdit(new UndoableEdit() {
+        undoRedoManager.addEdit(generateUndoableEdit());
+        undoRedoManager.setHasSignificantEdits(true);
+        undoRedoManager.undo();
+        assert undoRedoManager.canRedo() : true;
+        assert undoRedoManager.hasSignificantEdits() : false;
+        return self();
+    }
+
+    public RedoBDDTestStage the_user_activates_the_redo_function() {
+        // User activates the redo function
+        undoRedoManager.redo();
+        return self();
+    }
+
+    public RedoBDDTestStage the_undone_edit_should_come_back() {
+        // Assert that the redo operation is successful
+        assert undoRedoManager.canUndo() : true;
+        assert undoRedoManager.hasSignificantEdits() : true;
+        return self();
+    }
+
+    private UndoableEdit generateUndoableEdit() {
+        return new UndoableEdit() {
             private boolean canUndo = true;
             private boolean canRedo = false;
+
             @Override
             public void undo() throws CannotUndoException {
                 canUndo = false;
@@ -80,24 +97,7 @@ public class RedoBDDTestStage extends Stage<RedoBDDTestStage> {
             public String getRedoPresentationName() {
                 return null;
             }
-        });
-        undoRedoManager.setHasSignificantEdits(true);
-        undoRedoManager.undo();
-        assert undoRedoManager.canRedo() : true;
-        assert undoRedoManager.hasSignificantEdits() : false;
-        return self();
+        };
     }
 
-    public RedoBDDTestStage the_user_activates_the_redo_function() {
-        // User activates the redo function
-        undoRedoManager.redo();
-        return self();
-    }
-
-    public RedoBDDTestStage the_undone_edit_should_come_back() {
-        // Assert that the redo operation is successful
-        assert undoRedoManager.canUndo() : true;
-        assert undoRedoManager.hasSignificantEdits() : true;
-        return self();
-    }
 }

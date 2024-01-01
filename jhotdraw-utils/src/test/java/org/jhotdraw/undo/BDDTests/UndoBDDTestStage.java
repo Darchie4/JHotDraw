@@ -3,9 +3,7 @@ package org.jhotdraw.undo.BDDTests;
 import com.tngtech.jgiven.Stage;
 import com.tngtech.jgiven.annotation.ExpectedScenarioState;
 import com.tngtech.jgiven.annotation.ProvidedScenarioState;
-import org.jhotdraw.undo.CompositeEdit;
 import org.jhotdraw.undo.UndoRedoManager;
-import org.testng.annotations.BeforeSuite;
 
 import javax.swing.undo.CannotRedoException;
 import javax.swing.undo.CannotUndoException;
@@ -27,6 +25,7 @@ public class UndoBDDTestStage extends Stage<UndoBDDTestStage> {
         undoRedoManager.addEdit(new UndoableEdit() {
             private boolean canUndo = true;
             private boolean canRedo = false;
+
             @Override
             public void undo() throws CannotUndoException {
                 canUndo = false;
@@ -99,8 +98,8 @@ public class UndoBDDTestStage extends Stage<UndoBDDTestStage> {
 
     public UndoBDDTestStage the_edit_should_be_undone() {
         // Assert that the undo operation is successful
-        assertFalse( undoRedoManager.canUndo());
-        assertTrue( undoRedoManager.canRedo());
+        assertFalse(undoRedoManager.canUndo());
+        assertTrue(undoRedoManager.canRedo());
 
         return self();
     }
