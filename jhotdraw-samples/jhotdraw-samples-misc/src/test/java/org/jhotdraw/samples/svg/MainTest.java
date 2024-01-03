@@ -18,8 +18,10 @@
  */
 package org.jhotdraw.samples.svg;
 
-
+import org.junit.Ignore;
 import org.junit.Test;
+
+import static java.lang.Thread.sleep;
 
 /**
  *
@@ -31,13 +33,16 @@ public class MainTest {
      * Test of main method, of class Main.
      */
     @Test
+    @Ignore("Needs a GUI")
     public void testMain() {
         System.out.println("main");
         String[] args = {};
         Main.main(args);
 
-        while (true){
-
+        try {
+            sleep(20000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
     }
 

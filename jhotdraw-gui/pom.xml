@@ -29,6 +29,12 @@
             <artifactId>jhotdraw-core</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.jhotdraw</groupId>
+            <artifactId>jhotdraw-utils</artifactId>
+            <version>9.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
     <name>jhotdraw-gui</name>
 </project>
