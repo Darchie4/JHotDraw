@@ -1,0 +1,76 @@
+{
+  "className": "org.jhotdraw.draw.figure.QuadTreeScenario",
+  "name": "Quad Tree Scenario",
+  "scenarios": [
+    {
+      "className": "org.jhotdraw.draw.figure.QuadTreeScenario",
+      "testMethodName": "testBringToFrontAction",
+      "description": "Test bring to front action",
+      "tagIds": [],
+      "explicitParameters": [],
+      "derivedParameters": [],
+      "scenarioCases": [
+        {
+          "caseNr": 1,
+          "steps": [
+            {
+              "name": "some figures in a drawing",
+              "words": [
+                {
+                  "value": "Given",
+                  "isIntroWord": true
+                },
+                {
+                  "value": "some figures in a drawing"
+                }
+              ],
+              "status": "PASSED",
+              "durationInNanos": 225004600,
+              "depth": 0,
+              "parentFailed": false
+            },
+            {
+              "name": "bring to front is called",
+              "words": [
+                {
+                  "value": "When",
+                  "isIntroWord": true
+                },
+                {
+                  "value": "bring to front is called"
+                }
+              ],
+              "status": "PASSED",
+              "durationInNanos": 15567800,
+              "depth": 0,
+              "parentFailed": false
+            },
+            {
+              "name": "figures are at the front",
+              "words": [
+                {
+                  "value": "Then",
+                  "isIntroWord": true
+                },
+                {
+                  "value": "figures are at the front"
+                }
+              ],
+              "status": "PASSED",
+              "durationInNanos": 3219000,
+              "depth": 0,
+              "parentFailed": false
+            }
+          ],
+          "explicitArguments": [],
+          "derivedArguments": [],
+          "status": "SUCCESS",
+          "durationInNanos": 287957200
+        }
+      ],
+      "casesAsTable": false,
+      "durationInNanos": 287957200
+    }
+  ],
+  "tagMap": {}
+}

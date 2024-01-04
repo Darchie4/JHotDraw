@@ -10,8 +10,6 @@ package org.jhotdraw.samples.net;
 import java.awt.*;
 import java.util.*;
 import javax.swing.*;
-
-import dk.sdu.mmmi.featuretracer.lib.FeatureEntryPoint;
 import org.jhotdraw.action.edit.CopyAction;
 import org.jhotdraw.action.edit.CutAction;
 import org.jhotdraw.action.edit.DuplicateAction;
@@ -24,6 +22,8 @@ import org.jhotdraw.draw.DefaultDrawingEditor;
 import org.jhotdraw.draw.Drawing;
 import org.jhotdraw.draw.DrawingEditor;
 import org.jhotdraw.draw.DrawingView;
+import org.jhotdraw.draw.action.edit.BringToFrontAction;
+import org.jhotdraw.draw.action.edit.SendToBackAction;
 import org.jhotdraw.draw.figure.LineConnectionFigure;
 import org.jhotdraw.draw.action.*;
 import org.jhotdraw.draw.tool.ConnectionTool;
@@ -50,7 +50,6 @@ public class NetPanel extends JPanel {
     /**
      * Creates new instance.
      */
-    @FeatureEntryPoint(value = "NetPanel")
     public NetPanel() {
         ResourceBundleUtil labels = ResourceBundleUtil.getBundle("org.jhotdraw.draw.Labels");
         initComponents();

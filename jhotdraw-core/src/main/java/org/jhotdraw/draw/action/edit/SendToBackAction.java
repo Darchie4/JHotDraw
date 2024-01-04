@@ -5,14 +5,18 @@
  * You may not use, copy or modify this file, except in compliance with the
  * accompanying license terms.
  */
-package org.jhotdraw.draw.action;
+package org.jhotdraw.draw.action.edit;
 
 import dk.sdu.mmmi.featuretracer.lib.FeatureEntryPoint;
+import org.jhotdraw.draw.action.AbstractSelectedAction;
 import org.jhotdraw.draw.figure.Figure;
-import java.util.*;
-import javax.swing.undo.*;
-import org.jhotdraw.draw.*;
 import org.jhotdraw.util.ResourceBundleUtil;
+
+import javax.swing.undo.AbstractUndoableEdit;
+import javax.swing.undo.CannotRedoException;
+import javax.swing.undo.CannotUndoException;
+import java.util.Collection;
+import java.util.LinkedList;
 
 /**
  * SendToBackAction.
@@ -38,9 +42,9 @@ public class SendToBackAction extends AbstractSelectedAction {
 
     @Override
     public void actionPerformed(java.awt.event.ActionEvent e) {
-        final DrawingView view = getView();
-        final LinkedList<Figure> figures = new LinkedList<>(view.getSelectedFigures());
-        sendToBack(view, figures);
+        final Drawing drawing = super.getDrawing();
+        final LinkedList<Figure> figures = new LinkedList<>(super.getSelectedFigures());
+        sendToBack(drawing, figures);
         fireUndoableEditHappened(new AbstractUndoableEdit() {
             private static final long serialVersionUID = 1L;
 
@@ -54,20 +58,19 @@ public class SendToBackAction extends AbstractSelectedAction {
             @Override
             public void redo() throws CannotRedoException {
                 super.redo();
-                SendToBackAction.sendToBack(view, figures);
+                SendToBackAction.sendToBack(drawing, figures);
             }
 
             @Override
             public void undo() throws CannotUndoException {
                 super.undo();
-                BringToFrontAction.bringToFront(view, figures);
+                BringToFrontAction.bringToFront(drawing, figures);
             }
         });
     }
 
     @FeatureEntryPoint("SendToBack feature")
-    public static void sendToBack(DrawingView view, Collection<Figure> figures) {
-        Drawing drawing = view.getDrawing();
+    public static void sendToBack(Drawing drawing, Collection<Figure> figures) {
         for (Figure figure : figures) { // XXX Shouldn't the figures be sorted here back to front?
             drawing.sendToBack(figure);
         }

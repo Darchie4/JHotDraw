@@ -9,6 +9,7 @@ package org.jhotdraw.draw.action;
 
 import java.beans.*;
 import java.io.Serializable;
+import java.util.Set;
 import javax.swing.*;
 import javax.swing.undo.*;
 import org.jhotdraw.api.app.Disposable;
@@ -18,6 +19,7 @@ import org.jhotdraw.draw.DrawingEditor;
 import org.jhotdraw.draw.DrawingView;
 import org.jhotdraw.draw.event.FigureSelectionEvent;
 import org.jhotdraw.draw.event.FigureSelectionListener;
+import org.jhotdraw.draw.figure.Figure;
 
 /**
  * This abstract class can be extended to implement an {@code Action} that acts
@@ -200,5 +202,9 @@ public abstract class AbstractSelectedAction
                 activeView.addPropertyChangeListener(eventHandler);
             }
         }
+    }
+
+    public Set<Figure> getSelectedFigures() {
+        return getView().getSelectedFigures();
     }
 }

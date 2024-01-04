@@ -20,6 +20,8 @@ import static org.jhotdraw.draw.AttributeKeys.PATH_CLOSED;
 import org.jhotdraw.draw.DrawingEditor;
 import org.jhotdraw.draw.DrawingView;
 import org.jhotdraw.draw.action.*;
+import org.jhotdraw.draw.action.edit.BringToFrontAction;
+import org.jhotdraw.draw.action.edit.SendToBackAction;
 import org.jhotdraw.draw.tool.CreationTool;
 import org.jhotdraw.draw.tool.TextAreaCreationTool;
 import org.jhotdraw.draw.tool.TextCreationTool;

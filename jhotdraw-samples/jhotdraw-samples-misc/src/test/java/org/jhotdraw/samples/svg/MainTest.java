@@ -41,7 +41,7 @@ public class MainTest {
         Main.main(args);
 
         try {
-            sleep(120000);
+            sleep(20000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }

@@ -76,7 +76,6 @@ public class SVGTextFigure
 
     // DRAWING
     @Override
-    @FeatureEntryPoint("Text Figure")
     protected void drawText(java.awt.Graphics2D g) {
     }
 
