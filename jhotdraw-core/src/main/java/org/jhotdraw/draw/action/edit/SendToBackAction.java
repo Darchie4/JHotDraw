@@ -9,6 +9,7 @@ package org.jhotdraw.draw.action.edit;
 
 import dk.sdu.mmmi.featuretracer.lib.FeatureEntryPoint;
 
+import org.jhotdraw.draw.Drawing;
 import org.jhotdraw.draw.DrawingEditor;
 import org.jhotdraw.draw.action.AbstractSelectedAction;
 import org.jhotdraw.draw.figure.Figure;
