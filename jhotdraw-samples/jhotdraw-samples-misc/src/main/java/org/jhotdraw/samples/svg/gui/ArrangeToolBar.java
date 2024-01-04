@@ -7,6 +7,8 @@
  */
 package org.jhotdraw.samples.svg.gui;
 
+import org.jhotdraw.draw.action.edit.BringToFrontAction;
+import org.jhotdraw.draw.action.edit.SendToBackAction;
 import org.jhotdraw.gui.plaf.palette.PaletteButtonUI;
 import java.awt.*;
 import javax.swing.*;

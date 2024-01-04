@@ -30,6 +30,8 @@ import org.jhotdraw.draw.AttributeKeys;
 import org.jhotdraw.draw.DefaultDrawingEditor;
 import org.jhotdraw.draw.DrawingEditor;
 import org.jhotdraw.draw.action.*;
+import org.jhotdraw.draw.action.edit.BringToFrontAction;
+import org.jhotdraw.draw.action.edit.SendToBackAction;
 import org.jhotdraw.draw.io.InputFormat;
 import org.jhotdraw.draw.io.OutputFormat;
 import org.jhotdraw.draw.tool.CreationTool;

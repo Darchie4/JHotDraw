@@ -6,7 +6,6 @@
  * accompanying license terms.
  */
 package org.jhotdraw.samples.svg;
-
 import org.jhotdraw.api.app.Application;
 import org.jhotdraw.app.OSXApplication;
 import org.jhotdraw.app.SDIApplication;

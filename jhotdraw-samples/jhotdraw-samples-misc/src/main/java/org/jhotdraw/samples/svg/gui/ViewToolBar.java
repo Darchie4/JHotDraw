@@ -7,6 +7,7 @@
  */
 package org.jhotdraw.samples.svg.gui;
 
+import dk.sdu.mmmi.featuretracer.lib.FeatureEntryPoint;
 import org.jhotdraw.gui.action.ButtonFactory;
 import org.jhotdraw.gui.plaf.palette.PaletteFormattedTextFieldUI;
 import org.jhotdraw.gui.plaf.palette.PaletteButtonUI;
@@ -55,6 +56,7 @@ public class ViewToolBar extends AbstractToolBar {
         constrainer.setWidth(prefs.getDouble("view.gridSize", 8d));
     }
 
+    @FeatureEntryPoint("Toolbar")
     @Override
     protected JComponent createDisclosedComponent(int state) {
         JPanel p = null;

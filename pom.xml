@@ -35,6 +35,8 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
+		<sonar.organization>jhotdraw-software-maintenance</sonar.organization>
+		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 	</properties>
 	<description>This is a fork of jhotdraw from http://sourceforge.net/projects/jhotdraw</description>
 	<build>
@@ -117,6 +119,8 @@
 						<artifactId>checkstyle</artifactId>
 						<version>8.29</version>
 					</dependency>
+
+
 				</dependencies>
 			</plugin>
 		</plugins>

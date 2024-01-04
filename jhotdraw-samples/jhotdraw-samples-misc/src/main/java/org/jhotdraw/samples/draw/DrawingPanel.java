@@ -14,6 +14,8 @@ import org.jhotdraw.action.edit.CutAction;
 import org.jhotdraw.action.edit.DuplicateAction;
 import org.jhotdraw.action.edit.PasteAction;
 import org.jhotdraw.action.edit.SelectAllAction;
+import org.jhotdraw.draw.action.edit.BringToFrontAction;
+import org.jhotdraw.draw.action.edit.SendToBackAction;
 import org.jhotdraw.draw.figure.AbstractAttributedFigure;
 import static org.jhotdraw.draw.AttributeKeys.*;
 import org.jhotdraw.draw.figure.BezierFigure;
