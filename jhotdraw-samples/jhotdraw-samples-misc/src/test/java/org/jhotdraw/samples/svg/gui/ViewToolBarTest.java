@@ -20,6 +20,7 @@ public class ViewToolBarTest {
         viewPalette.editor = new DefaultDrawingEditor();
         viewPalette.setView(new DefaultDrawingView());
     }
+
     @Test
     public void testCreateDisclosedComponent() {
         // Test that component is only created within the two eligible states of 1 & 2
@@ -36,11 +37,11 @@ public class ViewToolBarTest {
     }
 
     @Test
-    public void testClosedPanel() {
+    public void testHalfOpenPanel() {
         // Panel setup
         JComponent panel = viewPalette.createDisclosedComponent(1);
 
-        // Test that there are no text fields and 2 buttons in the closed panel
+        // Test that there are no text fields and 2 buttons in the half open panel
 
         Component[] components = panel.getComponents();
 
@@ -53,11 +54,11 @@ public class ViewToolBarTest {
     }
 
     @Test
-    public void testOpenPanel() {
+    public void testFullOpenPanel() {
         // Panel setup
         JComponent panel = viewPalette.createDisclosedComponent(2);
 
-        // Tests that there are 2 text fields and 2 buttons in the open panel
+        // Tests that there are 2 text fields and 2 buttons in the full open panel
 
         Component[] components = panel.getComponents();
 

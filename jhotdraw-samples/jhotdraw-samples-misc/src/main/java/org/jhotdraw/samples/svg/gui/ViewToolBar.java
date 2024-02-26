@@ -62,13 +62,13 @@ public class ViewToolBar extends AbstractToolBar {
         }
 
         return switch (state) {
-            case 1 -> closedPanel();
-            case 2 -> openPanel();
+            case 1 -> halfOpenPanel();
+            case 2 -> fullOpenPanel();
             default -> null;
         };
     }
 
-    private JPanel closedPanel() {
+    private JPanel halfOpenPanel() {
 
         // Toggle Grid Button
         AbstractButton toggleGridButton = createGridButton();
@@ -77,7 +77,8 @@ public class ViewToolBar extends AbstractToolBar {
 
         // Zoom Button
         AbstractButton zoomButton = createZoomButton();
-        zoomButton.setPreferredSize(new Dimension(zoomButton.getPreferredSize().width, toggleGridButton.getPreferredSize().height));
+        zoomButton.setPreferredSize(new Dimension(zoomButton.getPreferredSize().width,
+                toggleGridButton.getPreferredSize().height));
 
         GridBagConstraints zoomButtonConstraints = createZoomGridbagConstraints();
         zoomButtonConstraints.weightx = 1;
@@ -91,7 +92,7 @@ public class ViewToolBar extends AbstractToolBar {
         return p;
     }
 
-    private JPanel openPanel() {
+    private JPanel fullOpenPanel() {
 
         // Grid Size Field
         JLifeFormattedTextField gridSizeField = getGridSizeField();
