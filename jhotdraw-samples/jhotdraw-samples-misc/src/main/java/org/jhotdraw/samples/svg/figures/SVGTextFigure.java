@@ -7,7 +7,6 @@
  */
 package org.jhotdraw.samples.svg.figures;
 
-import dk.sdu.mmmi.featuretracer.lib.FeatureEntryPoint;
 import org.jhotdraw.draw.figure.TextHolderFigure;
 import java.awt.*;
 import java.awt.font.*;
@@ -75,7 +74,6 @@ public class SVGTextFigure
     }
 
     // DRAWING
-    @FeatureEntryPoint("Text Figure")
     @Override
     protected void drawText(java.awt.Graphics2D g) {
     }
@@ -181,7 +179,6 @@ public class SVGTextFigure
         return getTextShape().getBounds2D().contains(p);
     }
 
-    @FeatureEntryPoint("Font - Text Figure")
     private Shape getTextShape() {
         if (cachedTextShape == null) {
             String text = getText();

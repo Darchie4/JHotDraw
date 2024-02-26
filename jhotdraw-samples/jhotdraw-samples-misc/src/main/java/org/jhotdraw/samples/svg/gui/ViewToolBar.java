@@ -35,15 +35,13 @@ public class ViewToolBar extends AbstractToolBar {
 
     private static final long serialVersionUID = 1L;
     private DrawingView view;
-
-    private ResourceBundleUtil labels = ResourceBundleUtil.getBundle("org.jhotdraw.samples.svg.Labels");
+    private static final ResourceBundleUtil labels = ResourceBundleUtil.getBundle("org.jhotdraw.samples.svg.Labels");
     private String gridSizeKey = "view.gridSize";
 
     /**
      * Creates new instance.
      */
     public ViewToolBar() {
-        ResourceBundleUtil labels = this.labels;
         setName(labels.getString(getID() + ".toolbar"));
         setDisclosureStateCount(3);
     }
@@ -132,7 +130,7 @@ public class ViewToolBar extends AbstractToolBar {
     }
 
     private JLifeFormattedTextField getZoomFactorField() {
-        
+
         JLifeFormattedTextField scaleFactorField = new JLifeFormattedTextField();
         scaleFactorField.setColumns(4);
         scaleFactorField.setToolTipText(labels.getString("view.zoomFactor.toolTipText"));

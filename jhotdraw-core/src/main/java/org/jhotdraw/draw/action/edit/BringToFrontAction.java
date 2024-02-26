@@ -14,7 +14,6 @@ import java.util.*;
 import javax.swing.undo.*;
 import org.jhotdraw.draw.*;
 import org.jhotdraw.util.ResourceBundleUtil;
-import dk.sdu.mmmi.featuretracer.lib.FeatureEntryPoint;
 
 /**
  * ToFrontAction.
@@ -44,7 +43,6 @@ public class BringToFrontAction extends AbstractSelectedAction{
         super.fireUndoableEditHappened(this.getUndoableEdit(super.getDrawing(), figures));
     }
 
-    @FeatureEntryPoint("bringToFront feature")
     public static void bringToFront(Drawing drawing, Collection<Figure> figures) {
         drawing.sort(figures).forEach(drawing::bringToFront);
     }

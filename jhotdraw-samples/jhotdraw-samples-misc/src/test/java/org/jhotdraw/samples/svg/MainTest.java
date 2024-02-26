@@ -33,7 +33,7 @@ public class MainTest {
      * Test of main method, of class Main.
      */
     @Test
-    @Ignore("Needs a GUI")
+    // @Ignore("Needs a GUI")
     public void testMain() {
         System.out.println("main");
         String[] args = {};

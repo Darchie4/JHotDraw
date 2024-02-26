@@ -7,7 +7,6 @@
  */
 package org.jhotdraw.draw.action.edit;
 
-import dk.sdu.mmmi.featuretracer.lib.FeatureEntryPoint;
 import org.jhotdraw.draw.action.AbstractSelectedAction;
 import org.jhotdraw.draw.figure.Figure;
 import java.util.*;
@@ -66,7 +65,6 @@ public class SendToBackAction extends AbstractSelectedAction {
         });
     }
 
-    @FeatureEntryPoint("SendToBack feature")
     public static void sendToBack(Drawing drawing, Collection<Figure> figures) {
         for (Figure figure : figures) { // XXX Shouldn't the figures be sorted here back to front?
             drawing.sendToBack(figure);
