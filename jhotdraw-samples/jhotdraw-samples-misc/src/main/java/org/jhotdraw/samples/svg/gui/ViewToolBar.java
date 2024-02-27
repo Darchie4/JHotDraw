@@ -35,14 +35,14 @@ public class ViewToolBar extends AbstractToolBar {
 
     private static final long serialVersionUID = 1L;
     private DrawingView view;
-    private static final ResourceBundleUtil labels = ResourceBundleUtil.getBundle("org.jhotdraw.samples.svg.Labels");
+    private static final ResourceBundleUtil LABELS = ResourceBundleUtil.getBundle("org.jhotdraw.samples.svg.Labels");
     private String gridSizeKey = "view.gridSize";
 
     /**
      * Creates new instance.
      */
     public ViewToolBar() {
-        setName(labels.getString(getID() + ".toolbar"));
+        setName(LABELS.getString(getID() + ".toolbar"));
         setDisclosureStateCount(3);
     }
 
@@ -146,7 +146,7 @@ public class ViewToolBar extends AbstractToolBar {
 
         JLifeFormattedTextField scaleFactorField = new JLifeFormattedTextField();
         scaleFactorField.setColumns(4);
-        scaleFactorField.setToolTipText(labels.getString("view.zoomFactor.toolTipText"));
+        scaleFactorField.setToolTipText(LABELS.getString("view.zoomFactor.toolTipText"));
         scaleFactorField.setHorizontalAlignment(JLifeFormattedTextField.RIGHT);
         scaleFactorField.putClientProperty("Palette.Component.segmentPosition", "first");
         scaleFactorField.setUI((PaletteFormattedTextFieldUI) PaletteFormattedTextFieldUI.createUI(scaleFactorField));
@@ -176,7 +176,7 @@ public class ViewToolBar extends AbstractToolBar {
     private JLifeFormattedTextField getGridSizeField() {
         JLifeFormattedTextField gridSizeField = new JLifeFormattedTextField();
         gridSizeField.setColumns(4);
-        gridSizeField.setToolTipText(labels.getString("view.gridSize.toolTipText"));
+        gridSizeField.setToolTipText(LABELS.getString("view.gridSize.toolTipText"));
         gridSizeField.setHorizontalAlignment(JLifeFormattedTextField.RIGHT);
         gridSizeField.putClientProperty("Palette.Component.segmentPosition", "first");
         gridSizeField.setUI((PaletteFormattedTextFieldUI) PaletteFormattedTextFieldUI.createUI(gridSizeField));
@@ -235,14 +235,14 @@ public class ViewToolBar extends AbstractToolBar {
     private AbstractButton createGridButton() {
         AbstractButton btn = ButtonFactory.createToggleGridButton(view);
         btn.setUI((PaletteButtonUI) PaletteButtonUI.createUI(btn));
-        labels.configureToolBarButton(btn, "alignGrid");
+        LABELS.configureToolBarButton(btn, "alignGrid");
         return btn;
     }
 
     private AbstractButton createZoomButton() {
         AbstractButton btn = ButtonFactory.createZoomButton(view);
         btn.setUI((PaletteButtonUI) PaletteButtonUI.createUI(btn));
-        labels.configureToolBarButton(btn, "view.zoomFactor");
+        LABELS.configureToolBarButton(btn, "view.zoomFactor");
         btn.setText("100 %");
         return btn;
     }
