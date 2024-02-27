@@ -11,6 +11,8 @@ import org.jhotdraw.gui.action.ButtonFactory;
 import org.jhotdraw.gui.plaf.palette.PaletteFormattedTextFieldUI;
 import org.jhotdraw.gui.plaf.palette.PaletteButtonUI;
 import java.awt.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.Objects;
 import javax.swing.*;
 import javax.swing.border.*;
@@ -157,19 +159,26 @@ public class ViewToolBar extends AbstractToolBar {
         scaleFactorField.setHorizontalAlignment(JTextField.LEADING);
         scaleFactorField.setValue(view.getScaleFactor());
 
-        scaleFactorField.addPropertyChangeListener(evt -> {
-            if ("value".equals(evt.getPropertyName()) && (evt.getNewValue() != null)) {
-                    view.setScaleFactor((Double) evt.getNewValue());
+        scaleFactorField.addPropertyChangeListener(new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                if ("value".equals(evt.getPropertyName()) && (evt.getNewValue() != null)) {
+                        view.setScaleFactor((Double) evt.getNewValue());
 
+                }
             }
         });
 
-        view.addPropertyChangeListener(evt -> {
-            if (Objects.equals(evt.getPropertyName(), DrawingView.SCALE_FACTOR_PROPERTY) && (evt.getNewValue() != null)) {
-                    scaleFactorField.setValue((Double) evt.getNewValue());
+        view.addPropertyChangeListener(new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                if (Objects.equals(evt.getPropertyName(), DrawingView.SCALE_FACTOR_PROPERTY) && (evt.getNewValue() != null)) {
+                        scaleFactorField.setValue((Double) evt.getNewValue());
 
+                }
             }
         });
+
         return scaleFactorField;
     }
 
@@ -185,7 +194,9 @@ public class ViewToolBar extends AbstractToolBar {
 
         final GridConstrainer constrainer = (GridConstrainer) view.getVisibleConstrainer();
 
-        gridSizeField.addPropertyChangeListener(evt -> {
+        gridSizeField.addPropertyChangeListener(new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
                 if ("value".equals(evt.getPropertyName()) && (evt.getNewValue() != null)) {
                         constrainer.setWidth((Double) evt.getNewValue());
                         constrainer.setHeight((Double) evt.getNewValue());
@@ -197,6 +208,7 @@ public class ViewToolBar extends AbstractToolBar {
                         view.getComponent().repaint();
 
                 }
+            }
         });
 
         gridSizeField.setValue(constrainer.getHeight());
