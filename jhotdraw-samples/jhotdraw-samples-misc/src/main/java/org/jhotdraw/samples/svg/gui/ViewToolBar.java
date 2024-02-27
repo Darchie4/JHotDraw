@@ -61,11 +61,23 @@ public class ViewToolBar extends AbstractToolBar {
             return null;
         }
 
-        return switch (state) {
-            case 1 -> halfOpenPanel();
-            case 2 -> fullOpenPanel();
-            default -> null;
-        };
+//        return switch (state) {
+//            case 1 -> halfOpenPanel();
+//            case 2 -> fullOpenPanel();
+//            default -> null;
+//        };
+
+        JPanel p = null;
+        switch (state) {
+            case 1:
+                p = halfOpenPanel();
+                break;
+            case 2:
+                p = fullOpenPanel();
+                break;
+            default:
+        }
+        return p;
     }
 
     private JPanel halfOpenPanel() {
